@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         if(sequencia[btnTag]!= -1)
             return
+
         sequencia[btnTag] = jogadorAtual
 
         if(jogadorAtual == jogador1){
