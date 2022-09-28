@@ -72,16 +72,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         sequencia[btnTag] = jogadorAtual
 
         if(jogadorAtual == jogador1){
-            btnClicado.setText("0")
+            btnClicado.setText("X")
             jogadorAtual = jogador2
-            textView.setText("Vez Jogador 2")
+            textView.setText("Vez do jogador 2")
             textView.setTextColor(Color.RED)
             btnClicado.setTextColor(Color.BLACK)
             btnClicado.backgroundTintList = getColorStateList(R.color.verde)
         }else{
-            btnClicado.setText("X")
+            btnClicado.setText("0")
             jogadorAtual = jogador1
-            textView.setText("Vez Jogador 1")
+            textView.setText("Vez do jogador 1")
             textView.setTextColor(Color.GREEN)
             btnClicado.setTextColor(Color.BLACK)
             btnClicado.backgroundTintList = getColorStateList(R.color.vermelho)
@@ -126,13 +126,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         if(jogadorVencedor == false){
-            var empate = 0
+            var empate = true
+
             for(i in 0 until sequencia.size){
                 if(sequencia[i]== -1){
-                    empate++
+                    empate = false
                 }
             }
-            if(empate == 0){
+            if(empate == true){
                 textView.setText("EMPATE!")
                 textView.setTextColor(Color.YELLOW)
                 reiniciar("EMPATE!")
@@ -145,8 +146,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             .setMessage(s)
             .setTitle("Resultado")
             .setPositiveButton("Reiniciar jogo", DialogInterface.OnClickListener {
-                    dialogInterface, i -> reiniciarJogo()
+                    _, _ -> reiniciarJogo()
             })
+            .setCancelable(false)
             .show()
     }
 
@@ -170,14 +172,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         b8.setText("")
         b9.setText("")
 
-        b1.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b2.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b3.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b4.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b5.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b6.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b7.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b8.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
-        b9.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b1.backgroundTintList = getColorStateList(R.color.purple_200)
+        b2.backgroundTintList = getColorStateList(R.color.purple_200)
+        b3.backgroundTintList = getColorStateList(R.color.purple_200)
+        b4.backgroundTintList = getColorStateList(R.color.purple_200)
+        b5.backgroundTintList = getColorStateList(R.color.purple_200)
+        b6.backgroundTintList = getColorStateList(R.color.purple_200)
+        b7.backgroundTintList = getColorStateList(R.color.purple_200)
+        b8.backgroundTintList = getColorStateList(R.color.purple_200)
+        b9.backgroundTintList = getColorStateList(R.color.purple_200)
     }
 }
