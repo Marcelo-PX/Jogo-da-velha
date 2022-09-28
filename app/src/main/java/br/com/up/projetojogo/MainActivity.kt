@@ -172,14 +172,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         b8.setText("")
         b9.setText("")
 
-        b1.backgroundTintList = getColorStateList(R.color.purple_200)
-        b2.backgroundTintList = getColorStateList(R.color.purple_200)
-        b3.backgroundTintList = getColorStateList(R.color.purple_200)
-        b4.backgroundTintList = getColorStateList(R.color.purple_200)
-        b5.backgroundTintList = getColorStateList(R.color.purple_200)
-        b6.backgroundTintList = getColorStateList(R.color.purple_200)
-        b7.backgroundTintList = getColorStateList(R.color.purple_200)
-        b8.backgroundTintList = getColorStateList(R.color.purple_200)
-        b9.backgroundTintList = getColorStateList(R.color.purple_200)
+        b1.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b2.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b3.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b4.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b5.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b6.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b7.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b8.backgroundTintList = getColorStateList(R.color.cor_padrao)
+        b9.backgroundTintList = getColorStateList(R.color.cor_padrao)
     }
 }
