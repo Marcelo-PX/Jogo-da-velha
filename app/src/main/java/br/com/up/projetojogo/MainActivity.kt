@@ -1,12 +1,13 @@
 package br.com.up.projetojogo
 
+import android.content.DialogInterface
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sequencia = intArrayOf(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1)
+        sequencia = intArrayOf(0,-1,-1,-1,-1,-1,-1,-1,-1,-1)
 
         textView = findViewById(R.id.textView2)
 
@@ -73,14 +74,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if(jogadorAtual == jogador1){
             btnClicado.setText("0")
             jogadorAtual = jogador2
-            textView.setText("Jogador 2")
+            textView.setText("Vez Jogador 2")
             textView.setTextColor(Color.RED)
             btnClicado.setTextColor(Color.BLACK)
             btnClicado.backgroundTintList = getColorStateList(R.color.verde)
         }else{
             btnClicado.setText("X")
             jogadorAtual = jogador1
-            textView.setText("Jogador 1")
+            textView.setText("Vez Jogador 1")
             textView.setTextColor(Color.GREEN)
             btnClicado.setTextColor(Color.BLACK)
             btnClicado.backgroundTintList = getColorStateList(R.color.vermelho)
@@ -114,14 +115,69 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     if(sequencia[p1] == jogador1){
                         textView.setText("Jogador 1 ganhou!")
                         textView.setTextColor(Color.GREEN)
+                        reiniciar("Jogador 1 ganhou!")
                     }else{
                         textView.setText("Jogador 2 ganhou!")
                         textView.setTextColor(Color.RED)
+                        reiniciar("Jogador 2 ganhou!")
                     }
                 }
-
             }
         }
 
+        if(jogadorVencedor == false){
+            var empate = 0
+            for(i in 0 until sequencia.size){
+                if(sequencia[i]== -1){
+                    empate++
+                }
+            }
+            if(empate == 0){
+                textView.setText("EMPATE!")
+                textView.setTextColor(Color.YELLOW)
+                reiniciar("EMPATE!")
+            }
+        }
+    }
+
+    private fun reiniciar(s: String) {
+        AlertDialog.Builder(this)
+            .setMessage(s)
+            .setTitle("Resultado")
+            .setPositiveButton("Reiniciar jogo", DialogInterface.OnClickListener {
+                    dialogInterface, i -> reiniciarJogo()
+            })
+            .show()
+    }
+
+    private fun reiniciarJogo() {
+
+        sequencia = intArrayOf(0,-1,-1,-1,-1,-1,-1,-1,-1,-1)
+
+        jogadorAtual = jogador1
+        jogadorVencedor = false
+
+        textView.setText("Aperte para começar")
+        textView.setTextColor(Color.GRAY)
+
+        b1.setText("")
+        b2.setText("")
+        b3.setText("")
+        b4.setText("")
+        b5.setText("")
+        b6.setText("")
+        b7.setText("")
+        b8.setText("")
+        b9.setText("")
+
+        b1.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b2.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b3.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b4.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b5.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b6.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b7.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b8.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
+        b9.backgroundTintList = getColorStateList(R.color.design_default_color_primary)
     }
 }
