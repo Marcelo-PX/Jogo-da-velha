@@ -21,22 +21,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var b8 : Button
     lateinit var b9 : Button
 
-    var jogador1 = 0
-    var jogador2 = 1
-    var jogadorAtual = jogador1
-
-    lateinit var sequencia : IntArray
     lateinit var textView : TextView
+    lateinit var textView2 : TextView
+    lateinit var sequencia : IntArray
+
+    var jogador1 = 1
+    var jogador2 = 2
+    var jogadorAtual = jogador1
 
     var jogadorVencedor = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // Vetor de posições dos botões de 1 a 9 (Obs: o index é contado a partir de 1).
+        sequencia = intArrayOf(0,0,0,0,0,0,0,0,0,0)
 
-        sequencia = intArrayOf(0,-1,-1,-1,-1,-1,-1,-1,-1,-1)
-
-        textView = findViewById(R.id.textView2)
+        textView = findViewById(R.id.textView)
+        textView2 = findViewById(R.id.textView2)
 
         b1 = findViewById(R.id.b1)
         b2 = findViewById(R.id.b2)
@@ -61,38 +63,39 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
 
-        if(jogadorVencedor)
+        if(jogadorVencedor) // Se o valor retornar verdadeiro o jogo pausa.
             return
 
-        var btnClicado = findViewById<Button>(v.id)
-        var btnTag = Integer.parseInt(btnClicado.tag.toString())
+        var btnClicado = findViewById<Button>(v.id) // Id do botão.
+        var btnTag = Integer.parseInt(btnClicado.tag.toString()) // Número do botão.
 
-        if(sequencia[btnTag]!= -1)
+        if(sequencia[btnTag] != 0) // Validar se o botão já foi selecionado.
             return
 
         sequencia[btnTag] = jogadorAtual
 
-        if(jogadorAtual == jogador1){
+        if(jogadorAtual == jogador1){ // Alternar jogador atual.
+
             btnClicado.setText("X")
             jogadorAtual = jogador2
-            textView.setText("Vez do jogador 2")
-            textView.setTextColor(Color.RED)
+            textView2.setText("Vez do jogador 2!")
+            textView2.setTextColor(Color.RED)
             btnClicado.setTextColor(Color.BLACK)
             btnClicado.backgroundTintList = getColorStateList(R.color.verde)
         }else{
             btnClicado.setText("0")
             jogadorAtual = jogador1
-            textView.setText("Vez do jogador 1")
-            textView.setTextColor(Color.GREEN)
+            textView2.setText("Vez do jogador 1!")
+            textView2.setTextColor(Color.GREEN)
             btnClicado.setTextColor(Color.BLACK)
             btnClicado.backgroundTintList = getColorStateList(R.color.vermelho)
         }
 
-        validarVencedor()
+        validarVencedor() // Função para definir jogador vitorioso ou empate.
     }
 
     private fun validarVencedor() {
-
+        // Matriz de posições válidas.
         var vencedor = arrayOf(
             intArrayOf(1,2,3),
             intArrayOf(4,5,6),
@@ -103,46 +106,55 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             intArrayOf(1,5,9),
             intArrayOf(3,5,7)
         )
-        for(i in 0 until vencedor.size){
+
+        for(i in 0 until vencedor.size) {
+            // Validando se as posições tem o mesmo valor.
             var p1 = vencedor[i][0]
             var p2 = vencedor[i][1]
             var p3 = vencedor[i][2]
 
-            if(sequencia[p1] == sequencia[p2] && sequencia[p1] == sequencia[p3]){
+            if(sequencia[p1] == sequencia[p2] && sequencia[p1] == sequencia[p3]) {
 
-                if(sequencia[p1]!= -1){
+                if(sequencia[p1] != 0) { // Validando se o vetor possui o valor inicial.
+
                     jogadorVencedor = true
+                    textView.setTextColor(Color.rgb(55,0,179)) // PURPLE_700
 
-                    if(sequencia[p1] == jogador1){
-                        textView.setText("Jogador 1 ganhou!")
-                        textView.setTextColor(Color.GREEN)
-                        reiniciar("Jogador 1 ganhou!")
+                    if(sequencia[p1] == jogador1) {
+
+                        textView2.setText("Jogador 1 ganhou!")
+                        textView2.setTextColor(Color.GREEN)
+                        reiniciar("Jogador um é o vencedor.")
                     }else{
-                        textView.setText("Jogador 2 ganhou!")
-                        textView.setTextColor(Color.RED)
-                        reiniciar("Jogador 2 ganhou!")
+                        textView2.setText("Jogador 2 ganhou!")
+                        textView2.setTextColor(Color.RED)
+                        reiniciar("Jogador dois é o vencedor.")
                     }
                 }
             }
         }
 
-        if(jogadorVencedor == false){
+        if(jogadorVencedor == false) {
             var empate = true
 
-            for(i in 0 until sequencia.size){
-                if(sequencia[i]== -1){
+            for(i in 1 until sequencia.size) {
+                // Se o index retornar 0 o vetor ainda não foi preenchido.
+                if(sequencia[i] == 0) {
                     empate = false
                 }
             }
-            if(empate == true){
-                textView.setText("EMPATE!")
-                textView.setTextColor(Color.YELLOW)
-                reiniciar("EMPATE!")
+            if(empate == true) {
+
+                textView2.setText("Empate!")
+                textView2.setTextColor(Color.YELLOW)
+                textView.setTextColor(Color.rgb(55,0,179)) // PURPLE_700
+                reiniciar("Deu velha.")
             }
         }
     }
 
     private fun reiniciar(s: String) {
+        // Caixa de diálogo com a função para reiniciar o jogo.
         AlertDialog.Builder(this)
             .setMessage(s)
             .setTitle("Resultado")
@@ -153,15 +165,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             .show()
     }
 
-    private fun reiniciarJogo() {
+    private fun reiniciarJogo() { // O jogo retorna ao estado inicial.
 
-        sequencia = intArrayOf(0,-1,-1,-1,-1,-1,-1,-1,-1,-1)
+        sequencia = intArrayOf(0,0,0,0,0,0,0,0,0,0)
 
-        jogadorAtual = jogador1
         jogadorVencedor = false
+        jogadorAtual = jogador1
 
-        textView.setText("Aperte para começar")
-        textView.setTextColor(Color.GRAY)
+        textView2.setText("Aperte para começar")
+        textView2.setTextColor(Color.rgb(160,160,160)) // CINZA
+
+        textView.setTextColor(Color.rgb(98,0,238)) // PURPLE_500
 
         b1.setText("")
         b2.setText("")
@@ -172,7 +186,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         b7.setText("")
         b8.setText("")
         b9.setText("")
-
+        // PURPLE_500
         b1.backgroundTintList = getColorStateList(R.color.cor_padrao)
         b2.backgroundTintList = getColorStateList(R.color.cor_padrao)
         b3.backgroundTintList = getColorStateList(R.color.cor_padrao)

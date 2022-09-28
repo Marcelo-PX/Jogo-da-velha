@@ -11,4 +11,6 @@
     <color name="vermelho">#F00</color>
     <color name="verde">#00A000</color>
     <color name="cor_padrao">#FF6200EE</color>
+    <color name="cinza">#A0A0A0</color>
+
 </resources>
